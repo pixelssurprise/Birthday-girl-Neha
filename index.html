@@ -112,6 +112,11 @@
     margin: 0 auto;
   }
 
+  /* Allow the memories page to breathe on laptops & tablets */
+  #memories.page{
+    max-width: 860px;
+  }
+
   .page.active{
     display:flex;
     animation: rise .65s cubic-bezier(.2,.8,.2,1);
@@ -137,7 +142,7 @@
 
   .section-sub{
     color: rgba(255,246,234,.75);
-    max-width: 440px;
+    max-width: 520px;
     margin: 0 auto 24px;
     font-size: clamp(.88rem, 2.8vw, .98rem);
     line-height: 1.55;
@@ -327,30 +332,44 @@
   }
 
   /* =====================================================
-     PAGE 5: SLIDEABLE POLAROID MEMORY REEL (SWIPE/SCROLL)
+     PAGE 5: SLIDEABLE POLAROID MEMORY REEL (PERFECT FIT)
   ===================================================== */
+  .deck-scroll-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
   .deck-scroll{
     display: flex;
-    gap: 16px;
+    gap: clamp(14px, 2.5vw, 24px);
     overflow-x: auto;
-    width: min(440px, 94vw);
+    max-width: 100%;
+    width: 100%;
     margin: 0 auto;
-    padding: 10px 8px 24px 8px;
+    padding: 15px clamp(12px, 3vw, 24px) 25px clamp(12px, 3vw, 24px);
     scroll-snap-type: x mandatory;
-    perspective: 1000px;
     -webkit-overflow-scrolling: touch;
   }
+
+  /* Center cards nicely on laptop/desktop screens */
+  @media (min-width: 768px) {
+    .deck-scroll{
+      justify-content: center;
+    }
+  }
+
   .deck-scroll::-webkit-scrollbar{ height: 6px; }
   .deck-scroll::-webkit-scrollbar-thumb{
     background: rgba(244,201,93, 0.4);
     border-radius: 10px;
   }
+
   .glass-polaroid{
-    flex: 0 0 clamp(200px, 60vw, 230px);
+    flex: 0 0 clamp(210px, 30vw, 245px);
     scroll-snap-align: center;
-    background: rgba(255, 255, 255, 0.96);
+    background: #ffffff;
     border-radius: 14px;
-    padding: 10px 10px 18px 10px;
+    padding: 12px 12px 16px 12px;
     color: #222;
     box-shadow: 0 16px 32px rgba(0,0,0,0.45);
     transform: rotate(-2deg);
@@ -359,23 +378,36 @@
   }
   .glass-polaroid:nth-child(even){ transform: rotate(2deg); }
   .glass-polaroid:hover{
-    transform: translateY(-6px) scale(1.03) rotate(0deg);
-    box-shadow: 0 20px 38px rgba(0,0,0,0.6), 0 0 18px rgba(255, 143, 171, 0.35);
+    transform: translateY(-8px) scale(1.03) rotate(0deg);
+    box-shadow: 0 22px 42px rgba(0,0,0,0.6), 0 0 20px rgba(255, 143, 171, 0.4);
   }
-  .glass-polaroid img{
+
+  /* Photo container with top-centered focus to keep faces in frame */
+  .polaroid-img-box{
     width: 100%;
-    height: clamp(170px, 28dvh, 210px);
-    object-fit: cover;
+    height: clamp(200px, 30vh, 250px);
     border-radius: 8px;
+    overflow: hidden;
+    background: #1a0f2b;
+  }
+  .polaroid-img-box img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
     pointer-events: none;
   }
+
   .glass-polaroid p{
     font-family: 'Caveat', cursive;
-    font-size: 1.25rem;
-    color: #333;
-    margin: 8px 0 0 0;
+    font-size: 1.3rem;
+    color: #2b1738;
+    margin: 10px 0 0 0;
     font-weight: 700;
+    line-height: 1.2;
     pointer-events: none;
+    text-align: center;
   }
 
   /* =====================================================
@@ -511,7 +543,7 @@
   <section class="page active" id="entry">
     <div class="entry-frame">
       <div class="eyebrow-note">a small, sealed thing for</div>
-      <h1 class="entry-title">Neha, <span>this one's for you.</span></h1>
+      <h1 class="entry-title">Dear Bayko Neha, <span>this one's for you.</span></h1>
       <div class="envelope" id="envelope">
         <div class="flap"></div>
         <div class="seal">💌</div>
@@ -528,7 +560,7 @@
     <div class="balloon-row">
       <span>🎈</span><span>🎂</span><span>🎉</span><span>🎈</span>
     </div>
-    <h1 class="welcome-title">Happy Birthday<span class="name">Neha!</span></h1>
+    <h1 class="welcome-title">Happy Birthday<span class="name">Pillu</span></h1>
     <p class="welcome-sub">Somewhere on this ordinary internet, there's a whole page that exists for one reason only — to make you smile today. Take your time, click through, there's a bit more waiting on each page.</p>
     <p class="from-note">— with love, Yash</p>
     <button class="btn" id="toCatchGame" style="margin-top:20px;">Start the Fun →</button>
@@ -536,7 +568,7 @@
 
   <!-- ===================== 3. REAL CATCH-THE-GIFTS MINI-GAME ===================== -->
   <section class="page" id="catchGame">
-    <div class="eyebrow-note">level 1: Girlfriend Privileges</div>
+    <div class="eyebrow-note">level 1: Neha's Privileges</div>
     <h2 class="section-heading">Catch Gifts from Yash! 🧺</h2>
     <p class="section-sub">Drag the basket left & right to catch dresses, chocolates, bouquets & hearts. Avoid the broccoli 🥦!</p>
     
@@ -577,18 +609,26 @@
     <h2 class="section-heading">Little Things I Keep Replaying</h2>
     <p class="section-sub">Swipe across to browse through some special moments of my favorite human:</p>
     
-    <div class="deck-scroll">
-      <div class="glass-polaroid">
-        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Memory 1">
-        <p>That 10/10 smile 😍</p>
-      </div>
-      <div class="glass-polaroid">
-        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80" alt="Memory 2">
-        <p>Certified Drama Queen 👑</p>
-      </div>
-      <div class="glass-polaroid">
-        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=400&q=80" alt="Memory 3">
-        <p>Forever My Favorite ✨</p>
+    <div class="deck-scroll-wrapper">
+      <div class="deck-scroll">
+        <div class="glass-polaroid">
+          <div class="polaroid-img-box">
+            <img src="img1.jpeg" alt="Memory 1">
+          </div>
+          <p>That 10/10 smile 😍</p>
+        </div>
+        <div class="glass-polaroid">
+          <div class="polaroid-img-box">
+            <img src="img2.jpeg" alt="Memory 2">
+          </div>
+          <p>Certified Drama Queen 👑</p>
+        </div>
+        <div class="glass-polaroid">
+          <div class="polaroid-img-box">
+            <img src="img3.jpeg" alt="Memory 3">
+          </div>
+          <p>Forever My Favorite ✨</p>
+        </div>
       </div>
     </div>
 
@@ -597,7 +637,7 @@
 
   <!-- ===================== 6. CAKE ===================== -->
   <section class="page" id="cake">
-    <h2 class="section-heading">Make a wish, Neha</h2>
+    <h2 class="section-heading">Make a wish, Baby</h2>
     <p class="section-sub">Blow out the candles — tap each little flame.</p>
     <div class="cake-wrap">
       <div class="cake">
@@ -626,7 +666,7 @@
     <button class="btn" id="toScratch" style="margin-top:22px; display:none;">Scratch Final Surprise →</button>
   </section>
 
-  <!-- ===================== 8. SCRATCH-CARD FINAL REVEAL (RESPONSIVE & CENTERED) ===================== -->
+  <!-- ===================== 8. SCRATCH-CARD FINAL REVEAL ===================== -->
   <section class="page" id="scratch">
     <div class="eyebrow-note">Secret Reveal</div>
     <h2 class="section-heading">One Last Mystery Card ✨</h2>
@@ -635,7 +675,7 @@
     <div class="scratch-container">
       <div class="scratch-secret">
         <h3>🎉 Surprise Unlocked!</h3>
-        <p>"Happy Birthday Baby. You have a lifetime pass of unprompted hugs, dinner dates, and endless love from Yash."</p>
+        <p>Happy Birthday Baby. You have a lifetime pass of unprompted hugs, dinner dates, and endless love from Yash.</p>
       </div>
       <canvas id="scratchCanvas"></canvas>
     </div>
@@ -645,7 +685,7 @@
 
   <!-- ===================== 9. FINALE ===================== -->
   <section class="page" id="finale">
-    <h1 class="finale-title">Happy Birthday<br><span>Baby</span></h1>
+    <h1 class="finale-title">Happy Birthday<br><span>Pillu</span></h1>
     <p class="welcome-sub">That's the whole surprise. Go have the best day — you've earned it.</p>
     <p class="from-note">Forever your biggest fan, Yash</p>
     <button class="btn ghost" id="replayBtn" style="margin-top:24px;">Watch it again ↺</button>
@@ -663,7 +703,6 @@
   const musicIcon = document.getElementById('musicIcon');
   let isSongPlaying = false;
 
-  // Audio button strictly shows Pause (⏸️) while music plays
   window.toggleSong = function() {
     if (isSongPlaying) {
       song.pause();
@@ -684,12 +723,10 @@
       isSongPlaying = true;
       musicIcon.innerText = "⏸️";
     }).catch(() => {
-      // Browser gesture restriction fallback
       musicIcon.innerText = "⏸️";
     });
   }
 
-  // Attempt auto-play immediately and on earliest gesture
   window.addEventListener('load', tryAutoPlaySong);
   document.addEventListener('click', function unlockAudio() {
     if (!isSongPlaying) tryAutoPlaySong();
@@ -1117,7 +1154,7 @@ Here's to another year of you being effortlessly wonderful, and me being lucky e
   }
 
   // =========================================================================
-  // 8. SCRATCH-CARD FINAL REVEAL (RESPONSIVE & CENTERED)
+  // 8. SCRATCH-CARD FINAL REVEAL
   // =========================================================================
   let scratchInitialized = false;
 
@@ -1134,7 +1171,6 @@ Here's to another year of you being effortlessly wonderful, and me being lucky e
     sCanvas.height = rect.height * dpr;
     sCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // Metallic Gold Gradient Layer
     const grad = sCtx.createLinearGradient(0, 0, rect.width, rect.height);
     grad.addColorStop(0, '#f4c95d');
     grad.addColorStop(0.5, '#e0a93b');
@@ -1142,7 +1178,6 @@ Here's to another year of you being effortlessly wonderful, and me being lucky e
     sCtx.fillStyle = grad;
     sCtx.fillRect(0, 0, rect.width, rect.height);
 
-    // Multi-line centered, responsive text formatting
     sCtx.fillStyle = '#241536';
     const fontSize = Math.max(13, Math.min(16, rect.width / 22));
     sCtx.font = `bold ${fontSize}px 'Poppins', sans-serif`;
